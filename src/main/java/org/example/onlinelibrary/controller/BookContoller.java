@@ -1,5 +1,7 @@
 package org.example.onlinelibrary.controller;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.example.onlinelibrary.dto.BookDto;
 import org.example.onlinelibrary.model.Book;
 import org.example.onlinelibrary.service.BookService;
@@ -10,12 +12,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
+@RequiredArgsConstructor
 public class BookContoller {
     private final BookService bookService;
-
-    BookContoller(BookService bookService) {
-        this.bookService = bookService;
-    }
 
     @GetMapping
     public ResponseEntity<List<BookDto>> getAllBooks() {
@@ -34,13 +33,13 @@ public class BookContoller {
     }
 
     @PostMapping
-    public ResponseEntity<Book> createBook(@RequestBody Book book) {
-        return ResponseEntity.ok(bookService.save(book));
+    public ResponseEntity<BookDto> createBook(@Valid @RequestBody BookDto bookDto) {
+        return ResponseEntity.ok(bookService.create(bookDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book book) {
-        return ResponseEntity.ok(bookService.update(id, book));
+    public ResponseEntity<BookDto> updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
+        return ResponseEntity.ok(bookService.update(id, bookDto));
     }
 
     @GetMapping("/search")

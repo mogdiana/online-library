@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @NotBlank
     @Column(name="name")
     private String name;
